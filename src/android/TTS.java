@@ -128,7 +128,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     throws JSONException, NullPointerException {
         JSONObject params = args.getJSONObject(0);
         Set<Voice> voices = tts.getVoices();
-        String retVoices;
+        String retVoices = "";
         String locale;
         boolean isNetwork;
         
