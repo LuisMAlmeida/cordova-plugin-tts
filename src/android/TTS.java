@@ -84,6 +84,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             speak(args, callbackContext);
         } else if (action.equals("stop")) {
             stop(args, callbackContext);
+        } else if (action.equals("shutdown")) {
+            shutdown(args, callbackContext);
         } else if (action.equals("checkLanguage")) {
             checkLanguage(args, callbackContext);
         } else if (action.equals("openInstallTts")) {
@@ -112,6 +114,11 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     private void stop(JSONArray args, CallbackContext callbackContext)
       throws JSONException, NullPointerException {
         tts.stop();
+    }
+
+     private void shutdown(JSONArray args, CallbackContext callbackContext)
+      throws JSONException, NullPointerException {
+        tts.shutdown();
     }
 
     private void callInstallTtsActivity(JSONArray args, CallbackContext callbackContext)
