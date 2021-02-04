@@ -127,8 +127,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     throws JSONException, NullPointerException {
         JSONObject params = args.getJSONObject(0);
         Set<Voice> voices = tts.getVoices();
-        
-        JSONArray arr = new JSONArray();  
+        String retVoices;
         String locale;
         boolean isNetwork;
         
@@ -143,17 +142,20 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         } else {
             locale = params.getString("locale");
         }
+        
         String[] localeArgs = locale.split("-");
         Locale loc = new Locale(localeArgs[0], localeArgs[1]));
         for(Voice voic : voices){
             if(voice.getLocale().equals(loc) && voice.isNetworkConnectionRequired() == isNetwork){
-                JSONObject jsonOb = new JSONObject();
-                jsonOb.put("Name", voic.getName());
-                arr.add(jsonOb);
+                retVoices = retVoices + "," + voic.getName());
             }
         }
-        String jsonText = JSONValue.toJSONString(arr);  
-        final PluginResult result = new PluginResult(PluginResult.Status.OK, jsonText);
+
+        if (retVoices != "") {
+            retVoices = retVoices.substring(1);
+        }
+
+        final PluginResult result = new PluginResult(PluginResult.Status.OK, retVoices);
         callbackContext.sendPluginResult(result);
   }
 
