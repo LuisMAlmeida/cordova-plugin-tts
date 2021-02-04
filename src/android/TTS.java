@@ -88,7 +88,9 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             shutdown(args, callbackContext);
         } else if (action.equals("checkLanguage")) {
             checkLanguage(args, callbackContext);
-        } else if (action.equals("openInstallTts")) {
+        } else if (action.equals("getVoices")) {
+            getVoices(args, callbackContext);
+        }else if (action.equals("openInstallTts")) {
             callInstallTtsActivity(args, callbackContext);
         } else {
             return false;
@@ -116,10 +118,45 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         tts.stop();
     }
 
-     private void shutdown(JSONArray args, CallbackContext callbackContext)
+    private void shutdown(JSONArray args, CallbackContext callbackContext)
       throws JSONException, NullPointerException {
         tts.shutdown();
     }
+
+    private void getVoices(JSONArray args, CallbackContext callbackContext)
+    throws JSONException, NullPointerException {
+        JSONObject params = args.getJSONObject(0);
+        Set<Voice> voices = tts.getVoices();
+        
+        JSONArray arr = new JSONArray();  
+        String locale;
+        boolean isNetwork;
+        
+        if (params.isNull("isNetwork")) {
+            isNetwork = false;
+        } else {
+            isNetwork = params.getBoolean("isNetwork");
+        }
+
+        if (params.isNull("locale")) {
+            locale = "en-US";
+        } else {
+            locale = params.getString("locale");
+        }
+        String[] localeArgs = locale.split("-");
+        Locale loc = new Locale(localeArgs[0], localeArgs[1]));
+        for(Voice voic : voices){
+            if(voice.getLocale().equals(loc) && voice.isNetworkConnectionRequired() == isNetwork){
+                JSONObject jsonOb = new JSONObject();
+                jsonOb.put("Name", voic.getName());
+                arr.add(jsonOb);
+            }
+        }
+        String jsonText = JSONValue.toJSONString(arr);  
+        final PluginResult result = new PluginResult(PluginResult.Status.OK, jsonText);
+        callbackContext.sendPluginResult(result);
+  }
+
 
     private void callInstallTtsActivity(JSONArray args, CallbackContext callbackContext)
       throws JSONException, NullPointerException {
