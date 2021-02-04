@@ -148,7 +148,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         Locale loc = new Locale(localeArgs[0], localeArgs[1]);
 
         for(Voice voic : voices){
-            if(voice.getLocale().equals(loc) && voice.isNetworkConnectionRequired() == isNetwork){
+            if(voic.getLocale().equals(loc) && voic.isNetworkConnectionRequired() == isNetwork){
                 retVoices = retVoices + "," + voic.getName();
             }
         }
