@@ -43,7 +43,15 @@ exports.checkLanguage = function() {
 
 exports.getVoices = function() {
     return new Promise(function (resolve, reject) {
-        cordova.exec(resolve, reject, 'TTS', 'getVoices', []);
+        var options = {};
+
+        if (typeof text == 'string') {
+            options.text = text;
+        } else {
+            options = text;
+        }
+        
+        cordova.exec(resolve, reject, 'TTS', 'getVoices', [options]);
     });
 };
 
