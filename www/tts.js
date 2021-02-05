@@ -24,14 +24,14 @@ exports.speak = function (text) {
     });
 };
 
-exports.setVoice = function(text) {
+exports.setVoice = function(voiceName) {
     return new Promise(function (resolve, reject) {
         var options = {};
 
-        if (typeof text == 'string') {
-            options.text = text;
+        if (typeof voiceName == 'string') {
+            options.voiceName = voiceName;
         } else {
-            options = text;
+            options = voiceName;
         }
 
         cordova.exec(resolve, reject, 'TTS', 'setVoice', [options]);
@@ -51,15 +51,8 @@ exports.checkLanguage = function() {
     });
 };
 
-exports.getVoices = function(text) {
-    return new Promise(function (resolve, reject) {
-        var options = {};
-
-        if (typeof text == 'string') {
-            options.text = text;
-        } else {
-            options = text;
-        }
+exports.getVoices = function(options) {
+    return new Promise(function (resolve, reject) {     
 
         cordova.exec(resolve, reject, 'TTS', 'getVoices', [options]);
     });
