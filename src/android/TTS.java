@@ -282,7 +282,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackContext.getCallbackId());
 
         String[] localeArgs = locale.split("-");
-        tts.setLanguage(new Locale(localeArgs[0], localeArgs[1]));
+        Locale loc = new Locale(localeArgs[0], localeArgs[1]);
+        tts.setLanguage(loc);
 
         if (Build.VERSION.SDK_INT >= 27) {
             tts.setSpeechRate((float) rate * 0.7f);
@@ -300,9 +301,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         }  
 
         if(voiceName != ""){
-            
-            String[] localeArgs = locale.split("-");
-            Voice voice = new Voice(voiceName,new Locale(localeArgs[0], localeArgs[1]), 1, 1, false, null);
+            Voice voice = new Voice(voiceName,loc, 1, 1, false, null);
             tts.setVoice(voice);
          /*   
         Set<Voice> voices = tts.getVoices();       
