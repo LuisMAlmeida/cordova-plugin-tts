@@ -41,7 +41,7 @@ exports.checkLanguage = function() {
     });
 };
 
-exports.getVoices = function() {
+exports.getVoices = function(text) {
     return new Promise(function (resolve, reject) {
         var options = {};
 
@@ -50,7 +50,7 @@ exports.getVoices = function() {
         } else {
             options = text;
         }
-        
+
         cordova.exec(resolve, reject, 'TTS', 'getVoices', [options]);
     });
 };
