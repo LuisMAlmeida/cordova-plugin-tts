@@ -86,9 +86,9 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             speak(args, callbackContext);
         } else if (action.equals("stop")) {
             stop(args, callbackContext);
-        } else if (action.equals("setVoice")) {
+        } /*else if (action.equals("setVoice")) {
             setVoice(args, callbackContext);
-        } else if (action.equals("checkLanguage")) {
+        } */else if (action.equals("checkLanguage")) {
             checkLanguage(args, callbackContext);
         } else if (action.equals("getVoices")) {
             getVoices(args, callbackContext);
@@ -118,10 +118,13 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     private void stop(JSONArray args, CallbackContext callbackContext)
       throws JSONException, NullPointerException {
         tts.stop();
+        
+        final PluginResult result = new PluginResult(PluginResult.Status.OK, "");
+        callbackContext.sendPluginResult(result);
     }
-
+    /*
     private void setVoice(JSONArray args, CallbackContext callbackContext)
-    throws JSONException, NullPointerException {
+        throws JSONException, NullPointerException {
         JSONObject params = args.getJSONObject(0);
         //Set<Voice> voices = tts.getVoices();       
         boolean isVoiceSet = false;
@@ -145,13 +148,13 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         Voice voice = new Voice(voiceName,new Locale(localeArgs[0], localeArgs[1]), 1, 1, false, null);
         tts.setVoice(voice);
         isVoiceSet = true;
-       /* for(Voice voic : voices){
+        for(Voice voic : voices){
             if(voic.getName().equals(voiceName)){
                 tts.setVoice(voic);
                 isVoiceSet = true;
                 break;
             }
-        }*/
+        }
 
         if(!isVoiceSet){
             callbackContext.error(ERR_VOICE_UNKNOWN);
@@ -162,10 +165,11 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         callbackContext.sendPluginResult(result);
        
   }
+  */
 
 
     private void getVoices(JSONArray args, CallbackContext callbackContext)
-    throws JSONException, NullPointerException {
+        throws JSONException, NullPointerException {
         JSONObject params = args.getJSONObject(0);
         Set<Voice> voices = tts.getVoices();
         String retVoices = "";
@@ -303,7 +307,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         if(voiceName != ""){
             Voice voice = new Voice(voiceName,loc, 1, 1, false, null);
             tts.setVoice(voice);
-    }
+        }   
 
 
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);

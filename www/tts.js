@@ -24,7 +24,7 @@ exports.speak = function (text) {
     });
 };
 
-exports.setVoice = function(voiceOptions) {
+/*exports.setVoice = function(voiceOptions) {
     return new Promise(function (resolve, reject) {
         var options = {};
 
@@ -36,7 +36,7 @@ exports.setVoice = function(voiceOptions) {
 
         cordova.exec(resolve, reject, 'TTS', 'setVoice', [options]);
     });
-};
+};*/
 
 exports.stop = function() {
     return new Promise(function (resolve, reject) {
