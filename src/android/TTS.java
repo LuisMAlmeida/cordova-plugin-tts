@@ -277,6 +277,31 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             tts.setSpeechRate((float) rate);
         }
 
+        String voiceName = "";
+
+        if (params.isNull("voiceName")) {
+            callbackContext.error(ERR_INVALID_OPTIONS);
+            return;
+        } else {
+            voiceName = params.getString("voiceName");
+        }  
+        if(voiceName != ""){
+        Set<Voice> voices = tts.getVoices();       
+        boolean isVoiceSet = false;
+       
+        
+        
+        for(Voice voic : voices){
+            if(voic.getName().equals(voiceName)){
+                tts.setVoice(voic);
+                isVoiceSet = true;
+                break;
+            }
+        }
+
+    }
+
+
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);
     }
 }
