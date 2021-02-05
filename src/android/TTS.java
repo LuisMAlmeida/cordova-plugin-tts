@@ -303,19 +303,6 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         if(voiceName != ""){
             Voice voice = new Voice(voiceName,loc, 1, 1, false, null);
             tts.setVoice(voice);
-         /*   
-        Set<Voice> voices = tts.getVoices();       
-        boolean isVoiceSet = false;
-       
-        
-        
-        for(Voice voic : voices){
-            if(voic.getName().equals(voiceName)){
-                tts.setVoice(voic);
-                isVoiceSet = true;
-                break;
-            }
-        }*/
     }
 
 
