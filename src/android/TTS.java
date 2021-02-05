@@ -87,9 +87,6 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         } else if (action.equals("stop")) {
             stop(args, callbackContext);
         }
-        /*else if (action.equals("setVoice")) {
-                   setVoice(args, callbackContext);
-               } */
         else if (action.equals("checkLanguage")) {
             checkLanguage(args, callbackContext);
         } else if (action.equals("getVoices")) {
@@ -124,50 +121,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         final PluginResult result = new PluginResult(PluginResult.Status.OK, "");
         callbackContext.sendPluginResult(result);
     }
-    /*
-    private void setVoice(JSONArray args, CallbackContext callbackContext)
-        throws JSONException, NullPointerException {
-        JSONObject params = args.getJSONObject(0);
-        //Set<Voice> voices = tts.getVoices();       
-        boolean isVoiceSet = false;
-        String voiceName;
-        String locale;
-
-        if (params.isNull("voiceName")) {
-            callbackContext.error(ERR_INVALID_OPTIONS);
-            return;
-        } else {
-            voiceName = params.getString("voiceName");
-        }   
-        
-        if (params.isNull("locale")) {
-            locale = "en-US";
-        } else {
-            locale = params.getString("locale");
-        }
-
-        String[] localeArgs = locale.split("-");
-        Voice voice = new Voice(voiceName,new Locale(localeArgs[0], localeArgs[1]), 1, 1, false, null);
-        tts.setVoice(voice);
-        isVoiceSet = true;
-        for(Voice voic : voices){
-            if(voic.getName().equals(voiceName)){
-                tts.setVoice(voic);
-                isVoiceSet = true;
-                break;
-            }
-        }
-
-        if(!isVoiceSet){
-            callbackContext.error(ERR_VOICE_UNKNOWN);
-            return;
-        }
-
-        final PluginResult result = new PluginResult(PluginResult.Status.OK, "");
-        callbackContext.sendPluginResult(result);
-       
-  }
-  */
+    
 
 
     private void getVoices(JSONArray args, CallbackContext callbackContext)

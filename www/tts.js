@@ -24,20 +24,6 @@ exports.speak = function (text) {
     });
 };
 
-/*exports.setVoice = function(voiceOptions) {
-    return new Promise(function (resolve, reject) {
-        var options = {};
-
-        if (typeof voiceOptions == 'string') {
-            options.voiceName = voiceOptions;
-        } else {
-            options = voiceOptions;
-        }
-
-        cordova.exec(resolve, reject, 'TTS', 'setVoice', [options]);
-    });
-};*/
-
 exports.stop = function () {
     return new Promise(function (resolve, reject) {
         cordova.exec(resolve, reject, 'TTS', 'stop', []);
