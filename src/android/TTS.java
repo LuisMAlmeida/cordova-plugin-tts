@@ -126,8 +126,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         Set<Voice> voices = tts.getVoices();       
         
         String voiceName;
-        Voice voice;
-        Voice emptyVoice;
+        Voice voice = new  Voice();
+        Voice emptyVoice = new  Voice();
         if (params.isNull("voiceName")) {
             callbackContext.error(ERR_INVALID_OPTIONS);
             return;
