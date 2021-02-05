@@ -123,18 +123,16 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     private void setVoice(JSONArray args, CallbackContext callbackContext)
     throws JSONException, NullPointerException {
         JSONObject params = args.getJSONObject(0);
-        Set<Voice> voices = tts.getVoices();       
+        //Set<Voice> voices = tts.getVoices();       
         
         String voiceName;
-        Voice voice = new  Voice();
-        Voice emptyVoice = new  Voice();
         if (params.isNull("voiceName")) {
             callbackContext.error(ERR_INVALID_OPTIONS);
             return;
         } else {
             voiceName = params.getString("voiceName");
         }   
-
+        /*
         for(Voice voic : voices){
             if(voic.getName().equals(voiceName)){
                 voice = voic;
@@ -145,7 +143,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         if(voice.equals(emptyVoice)){
             callbackContext.error(ERR_VOICE_UNKNOWN);
             return;
-        }
+        }*/
+        Voice voice = new Voice(voiceName,Locale.getDefault(), 1, 1, false, null);
         tts.setVoice(voice);
        
   }
