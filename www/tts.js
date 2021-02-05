@@ -24,14 +24,14 @@ exports.speak = function (text) {
     });
 };
 
-exports.setVoice = function(voiceName) {
+exports.setVoice = function(voiceOptions) {
     return new Promise(function (resolve, reject) {
         var options = {};
 
-        if (typeof voiceName == 'string') {
-            options.voiceName = voiceName;
+        if (typeof voiceOptions == 'string') {
+            options.voiceName = voiceOptions;
         } else {
-            options = voiceName;
+            options = voiceOptions;
         }
 
         cordova.exec(resolve, reject, 'TTS', 'setVoice', [options]);

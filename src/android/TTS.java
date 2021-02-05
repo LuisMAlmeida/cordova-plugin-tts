@@ -123,9 +123,11 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     private void setVoice(JSONArray args, CallbackContext callbackContext)
     throws JSONException, NullPointerException {
         JSONObject params = args.getJSONObject(0);
-        Set<Voice> voices = tts.getVoices();       
+        //Set<Voice> voices = tts.getVoices();       
         boolean isVoiceSet = false;
         String voiceName;
+        String locale;
+
         if (params.isNull("voiceName")) {
             callbackContext.error(ERR_INVALID_OPTIONS);
             return;
@@ -133,20 +135,31 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             voiceName = params.getString("voiceName");
         }   
         
-        for(Voice voic : voices){
+        if (params.isNull("locale")) {
+            locale = "en-US";
+        } else {
+            locale = params.getString("locale");
+        }
+
+        String[] localeArgs = locale.split("-");
+        Voice voice = new Voice(voiceName,new Locale(localeArgs[0], localeArgs[1]), 1, 1, false, null);
+        tts.setVoice(voice);
+        isVoiceSet = true;
+       /* for(Voice voic : voices){
             if(voic.getName().equals(voiceName)){
                 tts.setVoice(voic);
                 isVoiceSet = true;
                 break;
             }
-        }
+        }*/
 
         if(!isVoiceSet){
             callbackContext.error(ERR_VOICE_UNKNOWN);
             return;
         }
-        //Voice voice = new Voice(voiceName,Locale.getDefault(), 1, 1, false, null);
-        //tts.setVoice(voice);
+
+        final PluginResult result = new PluginResult(PluginResult.Status.OK, "");
+        callbackContext.sendPluginResult(result);
        
   }
 
@@ -277,7 +290,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             tts.setSpeechRate((float) rate);
         }
 
-        String voiceName = "";
+        /*String voiceName = "";
 
         if (params.isNull("voiceName")) {
             callbackContext.error(ERR_INVALID_OPTIONS);
@@ -299,7 +312,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             }
         }
 
-    }
+    }*/
 
 
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);
