@@ -290,7 +290,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             tts.setSpeechRate((float) rate);
         }
 
-        /*String voiceName = "";
+        String voiceName = "";
 
         if (params.isNull("voiceName")) {
             callbackContext.error(ERR_INVALID_OPTIONS);
@@ -298,7 +298,13 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         } else {
             voiceName = params.getString("voiceName");
         }  
+
         if(voiceName != ""){
+            
+            String[] localeArgs = locale.split("-");
+            Voice voice = new Voice(voiceName,new Locale(localeArgs[0], localeArgs[1]), 1, 1, false, null);
+            tts.setVoice(voice);
+         /*   
         Set<Voice> voices = tts.getVoices();       
         boolean isVoiceSet = false;
        
@@ -310,9 +316,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
                 isVoiceSet = true;
                 break;
             }
-        }
-
-    }*/
+        }*/
+    }
 
 
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);
