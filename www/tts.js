@@ -30,11 +30,7 @@ exports.stop = function() {
     });
 };
 
-exports.shutdown = function() {
-    return new Promise(function (resolve, reject) {
-        cordova.exec(resolve, reject, 'TTS', 'shutdown', []);
-    });
-};
+
 exports.checkLanguage = function() {
     return new Promise(function (resolve, reject) {
         cordova.exec(resolve, reject, 'TTS', 'checkLanguage', []);
