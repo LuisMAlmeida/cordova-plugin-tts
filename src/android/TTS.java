@@ -292,7 +292,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         tts.setLanguage(loc);
 
         if (Build.VERSION.SDK_INT >= 27) {
-            tts.setSpeechRate((float) rate * 0.7 f);
+            tts.setSpeechRate((float) rate * 0.7f);
         } else {
             tts.setSpeechRate((float) rate);
         }
@@ -300,8 +300,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         String voiceName = "";
 
         if (params.isNull("voiceName")) {
-            callbackContext.error(ERR_INVALID_OPTIONS);
-            return;
+            voiceName = "";
         } else {
             voiceName = params.getString("voiceName");
         }
