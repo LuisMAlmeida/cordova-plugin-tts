@@ -81,18 +81,20 @@ public class TTS extends CordovaPlugin implements OnInitListener {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
-            throws JSONException {
+    throws JSONException {
         if (action.equals("speak")) {
             speak(args, callbackContext);
         } else if (action.equals("stop")) {
             stop(args, callbackContext);
-        } /*else if (action.equals("setVoice")) {
-            setVoice(args, callbackContext);
-        } */else if (action.equals("checkLanguage")) {
+        }
+        /*else if (action.equals("setVoice")) {
+                   setVoice(args, callbackContext);
+               } */
+        else if (action.equals("checkLanguage")) {
             checkLanguage(args, callbackContext);
         } else if (action.equals("getVoices")) {
             getVoices(args, callbackContext);
-        }else if (action.equals("openInstallTts")) {
+        } else if (action.equals("openInstallTts")) {
             callInstallTtsActivity(args, callbackContext);
         } else {
             return false;
@@ -106,7 +108,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             tts = null;
         } else {
             // warm up the tts engine with an empty string
-            HashMap<String, String> ttsParams = new HashMap<String, String>();
+            HashMap < String, String > ttsParams = new HashMap < String, String > ();
             ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "");
             tts.setLanguage(new Locale("en", "US"));
             tts.speak("", TextToSpeech.QUEUE_FLUSH, ttsParams);
@@ -116,9 +118,9 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     }
 
     private void stop(JSONArray args, CallbackContext callbackContext)
-      throws JSONException, NullPointerException {
+    throws JSONException, NullPointerException {
         tts.stop();
-        
+
         final PluginResult result = new PluginResult(PluginResult.Status.OK, "");
         callbackContext.sendPluginResult(result);
     }
@@ -169,19 +171,19 @@ public class TTS extends CordovaPlugin implements OnInitListener {
 
 
     private void getVoices(JSONArray args, CallbackContext callbackContext)
-        throws JSONException, NullPointerException {
+    throws JSONException, NullPointerException {
         JSONObject params = args.getJSONObject(0);
-        Set<Voice> voices = tts.getVoices();
+        Set < Voice > voices = tts.getVoices();
         String retVoices = "";
         String locale;
         boolean isNetwork;
-        
+
         if (params.isNull("isNetwork")) {
             isNetwork = false;
         } else {
             isNetwork = params.getBoolean("isNetwork");
         }
-     
+
         if (params.isNull("locale")) {
             locale = "en-US";
         } else {
@@ -191,8 +193,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         String[] localeArgs = locale.split("-");
         Locale loc = new Locale(localeArgs[0], localeArgs[1]);
 
-        for(Voice voic : voices){
-            if(voic.getLocale().equals(loc) && voic.isNetworkConnectionRequired() == isNetwork){
+        for (Voice voic: voices) {
+            if (voic.getLocale().equals(loc) && voic.isNetworkConnectionRequired() == isNetwork) {
                 retVoices = retVoices + "," + voic.getName();
             }
         }
@@ -203,32 +205,32 @@ public class TTS extends CordovaPlugin implements OnInitListener {
 
         final PluginResult result = new PluginResult(PluginResult.Status.OK, retVoices);
         callbackContext.sendPluginResult(result);
-  }
+    }
 
 
     private void callInstallTtsActivity(JSONArray args, CallbackContext callbackContext)
-      throws JSONException, NullPointerException {
+    throws JSONException, NullPointerException {
 
         PackageManager pm = context.getPackageManager();
         Intent installIntent = new Intent();
         installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-        ResolveInfo resolveInfo = pm.resolveActivity( installIntent, PackageManager.MATCH_DEFAULT_ONLY );
+        ResolveInfo resolveInfo = pm.resolveActivity(installIntent, PackageManager.MATCH_DEFAULT_ONLY);
 
-        if( resolveInfo == null ) {
-           // Not able to find the activity which should be started for this intent
+        if (resolveInfo == null) {
+            // Not able to find the activity which should be started for this intent
         } else {
-          installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          context.startActivity(installIntent);
+            installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(installIntent);
         }
     }
 
 
     private void checkLanguage(JSONArray args, CallbackContext callbackContext)
-      throws JSONException, NullPointerException {
-        Set<Locale> supportedLanguages = tts.getAvailableLanguages();
+    throws JSONException, NullPointerException {
+        Set < Locale > supportedLanguages = tts.getAvailableLanguages();
         String languages = "";
-        if(supportedLanguages!= null) {
-            for (Locale lang : supportedLanguages) {
+        if (supportedLanguages != null) {
+            for (Locale lang: supportedLanguages) {
                 languages = languages + "," + lang;
             }
         }
@@ -241,7 +243,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     }
 
     private void speak(JSONArray args, CallbackContext callbackContext)
-            throws JSONException, NullPointerException {
+    throws JSONException, NullPointerException {
         JSONObject params = args.getJSONObject(0);
 
         if (params == null) {
@@ -282,7 +284,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             return;
         }
 
-        HashMap<String, String> ttsParams = new HashMap<String, String>();
+        HashMap < String, String > ttsParams = new HashMap < String, String > ();
         ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackContext.getCallbackId());
 
         String[] localeArgs = locale.split("-");
@@ -290,7 +292,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         tts.setLanguage(loc);
 
         if (Build.VERSION.SDK_INT >= 27) {
-            tts.setSpeechRate((float) rate * 0.7f);
+            tts.setSpeechRate((float) rate * 0.7 f);
         } else {
             tts.setSpeechRate((float) rate);
         }
@@ -302,12 +304,12 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             return;
         } else {
             voiceName = params.getString("voiceName");
-        }  
+        }
 
-        if(voiceName != ""){
-            Voice voice = new Voice(voiceName,loc, 1, 1, false, null);
+        if (voiceName != "") {
+            Voice voice = new Voice(voiceName, loc, 1, 1, false, null);
             tts.setVoice(voice);
-        }   
+        }
 
 
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);

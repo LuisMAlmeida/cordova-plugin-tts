@@ -38,27 +38,27 @@ exports.speak = function (text) {
     });
 };*/
 
-exports.stop = function() {
+exports.stop = function () {
     return new Promise(function (resolve, reject) {
         cordova.exec(resolve, reject, 'TTS', 'stop', []);
     });
 };
 
 
-exports.checkLanguage = function() {
+exports.checkLanguage = function () {
     return new Promise(function (resolve, reject) {
         cordova.exec(resolve, reject, 'TTS', 'checkLanguage', []);
     });
 };
 
-exports.getVoices = function(options) {
-    return new Promise(function (resolve, reject) {     
+exports.getVoices = function (options) {
+    return new Promise(function (resolve, reject) {
 
         cordova.exec(resolve, reject, 'TTS', 'getVoices', [options]);
     });
 };
 
-exports.openInstallTts = function() {
+exports.openInstallTts = function () {
     return new Promise(function (resolve, reject) {
         cordova.exec(resolve, reject, 'TTS', 'openInstallTts', []);
     });
