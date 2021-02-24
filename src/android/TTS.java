@@ -142,10 +142,6 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             locale = "en-US";
         } else {
             locale = params.getString("locale");
-            if(locale =="")
-            {
-                locale = "en-US"; 
-            }
         }
 
         String[] localeArgs = locale.split("-");
@@ -218,28 +214,18 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             return;
         } else {
             text = params.getString("text");
-            if(text == ""){
-            callbackContext.error(ERR_INVALID_OPTIONS);
-            return;
-            }
         }
 
         if (params.isNull("locale")) {
             locale = "en-US";
         } else {
             locale = params.getString("locale");
-            if(locale == ""){
-                locale = "en-US";
-            }
         }
 
         if (params.isNull("rate")) {
             rate = 1.0;
         } else {
             rate = params.getDouble("rate");
-            if(rate == 0){
-                rate = 1.0;
-            }
         }
 
         if (tts == null) {
