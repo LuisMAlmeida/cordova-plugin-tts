@@ -1,3 +1,5 @@
+TEST
+
 # Cordova Text-to-Speech Plugin
 
 ## Platforms
