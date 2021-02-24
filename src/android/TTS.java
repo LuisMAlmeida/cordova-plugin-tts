@@ -138,10 +138,14 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             isNetwork = params.getBoolean("isNetwork");
         }
 
-        if (params.isNull("locale") || params.getString("locale")=="") {
+        if (params.isNull("locale")) {
             locale = "en-US";
         } else {
             locale = params.getString("locale");
+            if(locale =="")
+            {
+                locale = "en-US"; 
+            }
         }
 
         String[] localeArgs = locale.split("-");
@@ -209,23 +213,33 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         String locale;
         double rate;
 
-        if (params.isNull("text") || params.getString("text")=="" ) {
+        if (params.isNull("text") ) {
             callbackContext.error(ERR_INVALID_OPTIONS);
             return;
         } else {
             text = params.getString("text");
+            if(text == ""){
+            callbackContext.error(ERR_INVALID_OPTIONS);
+            return;
+            }
         }
 
-        if (params.isNull("locale") || params.getString("locale")=="" ) {
+        if (params.isNull("locale")) {
             locale = "en-US";
         } else {
             locale = params.getString("locale");
+            if(locale == ""){
+                locale = "en-US";
+            }
         }
 
-        if (params.isNull("rate") || params.getDouble("rate")==0 ) {
+        if (params.isNull("rate")) {
             rate = 1.0;
         } else {
             rate = params.getDouble("rate");
+            if(rate == 0){
+                rate = 1.0;
+            }
         }
 
         if (tts == null) {
@@ -253,7 +267,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
 
         String voiceName = "";
 
-        if (params.isNull("voiceName") || params.getString("voiceName")=="" ) {
+        if (params.isNull("voiceName")) {
             voiceName = "";
         } else {
             voiceName = params.getString("voiceName");
